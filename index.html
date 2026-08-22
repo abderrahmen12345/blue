@@ -12,220 +12,207 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #ffffff;
-      color: #111111;
-      padding: 60px 20px;
-      line-height: 1.5;
+      background-color: #0d110e;
+      color: #ffffff;
+      padding: 0;
+      margin: 0;
     }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px;
+      background-color: #0d110e;
+      border-bottom: 1px solid #1a221d;
     }
-    header {
-      margin-bottom: 60px;
-    }
-    h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 8px;
-    }
-    .subtitle {
+    .brand-title {
       font-size: 1.15rem;
-      color: #666;
-      max-width: 680px;
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-    .meta-links {
-      display: flex;
-      gap: 20px;
-      font-size: 0.95rem;
-      color: #444;
       font-weight: 500;
+      color: #e0e0e0;
+      letter-spacing: -0.2px;
     }
-    .meta-links a {
-      color: #111;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    .project-stack {
+    .nav-links {
       display: flex;
-      flex-direction: column;
-      gap: 80px;
-      margin-bottom: 80px;
-    }
-    .project-item {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .project-image-wrap {
-      width: 100%;
-      background-color: #f4f4f4;
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid #eaeaea;
-    }
-    .project-image-wrap img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-    .project-details {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 20px;
-    }
-    .project-title-group {
-      max-width: 600px;
-    }
-    .project-tag {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 700;
-      color: #666;
-      margin-bottom: 4px;
-    }
-    .project-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 6px;
-    }
-    .project-desc {
+      gap: 32px;
       font-size: 0.95rem;
-      color: #555;
-      line-height: 1.5;
     }
-    footer {
-      border-top: 1px solid #eee;
-      padding-top: 40px;
-      font-size: 0.9rem;
-      color: #888;
+    .nav-links a {
+      color: #a0a0a0;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a.active,
+    .nav-links a:hover {
+      color: #20e070;
+      font-weight: 600;
+      border-bottom: 2px solid #20e070;
+      padding-bottom: 4px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+
+    .page-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      margin-bottom: 50px;
+      color: #ffffff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .folder-card {
+      background-color: #141b16;
+      border: 1px solid #1f2a23;
+      border-radius: 8px;
+      overflow: hidden;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .folder-card:hover {
+      transform: translateY(-4px);
+      border-color: #20e070;
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      background-color: #0a0d0b;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-footer {
+      padding: 20px 22px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .badge {
+      background-color: #20e070;
+      color: #0d110e;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      text-transform: capitalize;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .top-nav { padding: 20px 24px; }
+      .container { padding: 40px 24px; }
+      .page-title { font-size: 2.5rem; }
     }
     @media (max-width: 600px) {
-      body { padding: 30px 16px; }
-      h1 { font-size: 2rem; }
-      .project-details { flex-direction: column; }
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    
-    <header>
-      <h1>Your Name</h1>
-      <p class="subtitle">
-        Graphic Designer specializing in visual identity systems, editorial layouts, high-precision print production, and digital brand collateral.
-      </p>
-      <div class="meta-links">
-        <a href="mailto:your.email@example.com">email@domain.com</a>
-        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-        <span>Tunis, Tunisia</span>
-      </div>
-    </header>
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="brand-title">Your Name > Graphic Designer Portfolio</div>
+    <nav class="nav-links">
+      <a href="#">Work</a>
+      <a href="#" class="active">Available</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
 
-    <div class="project-stack">
+  <!-- Main Content Grid -->
+  <main class="container">
+    <h1 class="page-title">Available work</h1>
 
-      <!-- Project 1 -->
-      <article class="project-item">
-        <div class="project-image-wrap">
-          <img src="img1.jpg" alt="Brand Identity Case Study">
-        </div>
-        <div class="project-details">
-          <div class="project-title-group">
-            <div class="project-tag">Brand Identity & CMYK</div>
-            <h2 class="project-title">Corporate Identity & Color System</h2>
-            <p class="project-desc">Comprehensive brand manual with precise Pantone/CMYK specs, responsive logo lockups, and print usage guidelines.</p>
-          </div>
-        </div>
-      </article>
+    <div class="grid">
 
-      <!-- Project 2 -->
-      <article class="project-item">
-        <div class="project-image-wrap">
-          <img src="img2.jpg" alt="Tri-fold Brochure & Layout Setup">
+      <!-- Folder 1 -->
+      <a href="#" class="folder-card">
+        <div class="card-img-wrap">
+          <img src="img1.jpg" alt="Brand Identity & CMYK">
         </div>
-        <div class="project-details">
-          <div class="project-title-group">
-            <div class="project-tag">Print Media & Prepress</div>
-            <h2 class="project-title">Tri-fold Brochure & Layout Setup</h2>
-            <p class="project-desc">Print-ready collateral created with exact bleed, margins, folding lines, and typographic hierarchy.</p>
-          </div>
+        <div class="card-footer">
+          <span class="card-title">Brand Identity & CMYK</span>
+          <span class="badge">Available</span>
         </div>
-      </article>
+      </a>
 
-      <!-- Project 3 -->
-      <article class="project-item">
-        <div class="project-image-wrap">
-          <img src="img3.jpg" alt="E-Commerce Promotional Campaign">
+      <!-- Folder 2 -->
+      <a href="#" class="folder-card">
+        <div class="card-img-wrap">
+          <img src="img2.jpg" alt="Print Media & Prepress">
         </div>
-        <div class="project-details">
-          <div class="project-title-group">
-            <div class="project-tag">Digital & Social Media</div>
-            <h2 class="project-title">E-Commerce Promotional Campaign</h2>
-            <p class="project-desc">High-converting mobile ad templates and web promotional banners optimized for screen resolutions.</p>
-          </div>
+        <div class="card-footer">
+          <span class="card-title">Print Media & Prepress</span>
+          <span class="badge">Available</span>
         </div>
-      </article>
+      </a>
 
-      <!-- Project 4 -->
-      <article class="project-item">
-        <div class="project-image-wrap">
-          <img src="img4.jpg" alt="Skincare Product Packaging">
+      <!-- Folder 3 -->
+      <a href="#" class="folder-card">
+        <div class="card-img-wrap">
+          <img src="img3.jpg" alt="Digital Marketing">
         </div>
-        <div class="project-details">
-          <div class="project-title-group">
-            <div class="project-tag">Packaging & Dielines</div>
-            <h2 class="project-title">Skincare Product Packaging</h2>
-            <p class="project-desc">3D product packaging mockups combined with vector structural dieline templates ready for press.</p>
-          </div>
+        <div class="card-footer">
+          <span class="card-title">Digital Marketing</span>
+          <span class="badge">Available</span>
         </div>
-      </article>
+      </a>
 
-      <!-- Project 5 -->
-      <article class="project-item">
-        <div class="project-image-wrap">
-          <img src="img5.jpg" alt="Outdoor Architectural Billboard">
+      <!-- Folder 4 -->
+      <a href="#" class="folder-card">
+        <div class="card-img-wrap">
+          <img src="img4.jpg" alt="Packaging & Dielines">
         </div>
-        <div class="project-details">
-          <div class="project-title-group">
-            <div class="project-tag">Large Format & Signage</div>
-            <h2 class="project-title">Outdoor Architectural Billboard</h2>
-            <p class="project-desc">Environmental design and large format billboard artwork engineered for high-visibility display.</p>
-          </div>
+        <div class="card-footer">
+          <span class="card-title">Packaging & Dielines</span>
+          <span class="badge">Available</span>
         </div>
-      </article>
+      </a>
 
-      <!-- Project 6 -->
-      <article class="project-item">
-        <div class="project-image-wrap">
-          <img src="img6.jpg" alt="Multi-Channel Marketing System">
+      <!-- Folder 5 -->
+      <a href="#" class="folder-card">
+        <div class="card-img-wrap">
+          <img src="img5.jpg" alt="Large Format & Signage">
         </div>
-        <div class="project-details">
-          <div class="project-title-group">
-            <div class="project-tag">Digital Assets</div>
-            <h2 class="project-title">Multi-Channel Marketing System</h2>
-            <p class="project-desc">Unified social media branding layout demonstrating multi-platform consistency and grid discipline.</p>
-          </div>
+        <div class="card-footer">
+          <span class="card-title">Large Format & Signage</span>
+          <span class="badge">Available</span>
         </div>
-      </article>
+      </a>
+
+      <!-- Folder 6 -->
+      <a href="#" class="folder-card">
+        <div class="card-img-wrap">
+          <img src="img6.jpg" alt="Social Media Assets">
+        </div>
+        <div class="card-footer">
+          <span class="card-title">Social Media Assets</span>
+          <span class="badge">Available</span>
+        </div>
+      </a>
 
     </div>
-
-    <footer>
-      <span>&copy; 2026 Your Name</span>
-      <span>Portfolio for Vista Application</span>
-    </footer>
-
-  </div>
+  </main>
 
 </body>
 </html>
