@@ -6,102 +6,565 @@
   <title>Graphic Design Portfolio | Abderrahmen</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d110e; color: #ffffff; }
-    .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 60px; border-bottom: 1px solid #1a221d; }
-    .brand-title { font-size: 1.15rem; color: #e0e0e0; font-weight: 500; }
-    .nav-links a { color: #a0a0a0; text-decoration: none; margin-left: 24px; }
-    .nav-links a.active { color: #20e070; font-weight: 600; border-bottom: 2px solid #20e070; padding-bottom: 4px; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-    .section-title { font-size: 1.75rem; color: #20e070; margin: 40px 0 20px 0; border-bottom: 1px solid #1f2a23; padding-bottom: 10px; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .card { background-color: #141b16; border: 1px solid #1f2a23; border-radius: 8px; overflow: hidden; text-decoration: none; transition: 0.2s; }
-    .card:hover { transform: translateY(-4px); border-color: #20e070; }
-    .card-img-wrap { width: 100%; height: 240px; overflow: hidden; background-color: #0a0d0b; }
-    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .card-footer { padding: 18px; display: flex; justify-content: space-between; align-items: center; }
-    .card-title { font-size: 1rem; color: #ffffff; font-weight: 600; }
-    .badge { background-color: #20e070; color: #0d110e; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
-    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f0c; color: #e0e6e2; line-height: 1.5; }
+    
+    /* Navigation */
+    header { position: sticky; top: 0; z-index: 100; background-color: rgba(11, 15, 12, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a241e; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.5px; color: #ffffff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .logo span { color: #20e070; font-weight: 400; }
+    .status-badge { background: rgba(32, 224, 112, 0.1); color: #20e070; border: 1px solid rgba(32, 224, 112, 0.3); font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Hero / Intro */
+    .hero { max-width: 1200px; margin: 40px auto 30px; padding: 0 24px; text-align: left; }
+    .hero h1 { font-size: 2.5rem; color: #ffffff; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+    .hero p { color: #8e9e94; font-size: 1.1rem; max-width: 680px; }
+
+    /* Category Filter Tabs */
+    .tab-bar { max-width: 1200px; margin: 0 auto 30px; padding: 0 24px; display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-btn { background: #141c17; color: #a0b0a5; border: 1px solid #1f2b23; padding: 12px 22px; border-radius: 30px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+    .tab-btn:hover { background: #1c2820; color: #ffffff; border-color: #2e3f34; }
+    .tab-btn.active { background: #20e070; color: #0b0f0c; border-color: #20e070; font-weight: 700; box-shadow: 0 4px 20px rgba(32, 224, 112, 0.25); }
+    .tab-btn .count { background: rgba(0,0,0,0.15); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
+    .tab-btn.active .count { background: rgba(0,0,0,0.2); color: #0b0f0c; }
+
+    /* Portfolio Section Container */
+    .container { max-width: 1200px; margin: 0 auto 80px; padding: 0 24px; }
+    
+    .category-group { display: none; animation: fadeIn 0.4s ease-in-out; }
+    .category-group.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .group-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid #1a241e; padding-bottom: 16px; }
+    .group-title { font-size: 1.6rem; color: #ffffff; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+    .group-title::before { content: ""; width: 4px; height: 24px; background: #20e070; border-radius: 2px; }
+    .group-desc { color: #8e9e94; font-size: 0.95rem; }
+
+    /* Gallery Grid */
+    .gallery-grid { display: grid; grid-template-columns: repeat( auto-fill, minmax(280px, 1fr) ); gap: 20px; }
+    
+    .work-card { background: #131a15; border: 1px solid #1e2821; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; }
+    .work-card:hover { transform: translateY(-6px); border-color: #20e070; box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+    
+    .img-box { width: 100%; height: 240px; overflow: hidden; background: #080c09; position: relative; }
+    .img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+    .work-card:hover .img-box img { transform: scale(1.06); }
+    
+    .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,15,12,0.85) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; padding: 16px; }
+    .work-card:hover .overlay { opacity: 1; }
+    .zoom-hint { color: #20e070; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+    .card-info { padding: 16px; }
+    .card-title { font-size: 1rem; color: #ffffff; font-weight: 600; margin-bottom: 4px; }
+    .card-meta { font-size: 0.8rem; color: #7a8c80; display: flex; justify-content: space-between; }
+
+    /* Modal / Lightbox */
+    .modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(5, 8, 6, 0.95); backdrop-filter: blur(10px); justify-content: center; align-items: center; padding: 20px; }
+    .modal.open { display: flex; animation: fadeIn 0.25s ease; }
+    .modal-content { max-width: 1000px; width: 100%; background: #131a15; border: 1px solid #233027; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; position: relative; }
+    @media (min-width: 768px) {
+      .modal-content { flex-direction: row; }
+    }
+    .modal-img-container { flex: 1.5; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; max-height: 60vh; }
+    @media (min-width: 768px) {
+      .modal-img-container { max-height: none; }
+    }
+    .modal-img-container img { width: 100%; height: 100%; object-fit: contain; }
+    
+    .modal-details { flex: 1; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; overflow-y: auto; }
+    .modal-header h3 { font-size: 1.5rem; color: #fff; margin-bottom: 8px; }
+    .modal-category { color: #20e070; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; display: inline-block; }
+    .modal-description { color: #a0b0a5; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+    .modal-specs { border-top: 1px solid #1f2b23; padding-top: 16px; margin-top: auto; }
+    .spec-item { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px; }
+    .spec-label { color: #697a6f; }
+    .spec-val { color: #e0e6e2; font-weight: 600; }
+    
+    .close-btn { position: absolute; top: 16px; right: 16px; z-index: 10; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+    .close-btn:hover { background: #20e070; color: #000; }
+
+    /* Footer */
+    footer { text-align: center; padding: 40px 20px; border-top: 1px solid #1a241e; color: #697a6f; font-size: 0.9rem; }
   </style>
 </head>
 <body>
 
-  <header class="top-nav">
-    <div class="brand-title">Abderrahmen &gt; Portfolio</div>
-    <nav class="nav-links">
-      <a href="#" class="active">Available Work</a>
-      <a href="#">About</a>
-    </nav>
+  <header>
+    <a href="#" class="logo">ABDERRAHMEN <span>/ GRAPHIC DESIGN</span></a>
+    <div class="status-badge">Available for Hire</div>
   </header>
 
+  <section class="hero">
+    <h1>Design Portfolio</h1>
+    <p>Select a discipline below to explore specialized project samples and graphic assets.</p>
+  </section>
+
+  <!-- Navigation Category Tabs -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchCategory('branding', this)">
+      ✨ Brand Identity <span class="count">20</span>
+    </button>
+    <button class="tab-btn" onclick="switchCategory('print', this)">
+      🖨️ Print &amp; Collateral <span class="count">20</span>
+    </button>
+    <button class="tab-btn" onclick="switchCategory('custom', this)">
+      🎨 Custom Layouts &amp; Edits <span class="count">20</span>
+    </button>
+    <button class="tab-btn" onclick="switchCategory('digital', this)">
+      📱 Digital &amp; AI Workflows <span class="count">20</span>
+    </button>
+  </nav>
+
   <main class="container">
-    <h1 style="font-size: 2.8rem; margin-bottom: 10px;">Portfolio Work</h1>
 
-    <!-- SECTION 1 -->
-    <h2 class="section-title">01. Print Layout &amp; Prepress</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80" alt="Editorial Magazine"></div>
-        <div class="card-footer"><span class="card-title">Editorial Magazine &amp; Grid</span><span class="badge">Available</span></div>
+    <!-- CATEGORY 1: BRAND IDENTITY & SMALL BUSINESS SYSTEMS -->
+    <div id="cat-branding" class="category-group active">
+      <div class="group-header">
+        <div>
+          <h2 class="group-title">Brand Identity &amp; Small Business Systems</h2>
+          <p class="group-desc">Logos, visual style guides, stationery suites, and social media branding kits.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80" alt="Packaging"></div>
-        <div class="card-footer"><span class="card-title">Packaging &amp; Dielines</span><span class="badge">Available</span></div>
-      </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="Brochure"></div>
-        <div class="card-footer"><span class="card-title">Tri-Fold Print Brochure</span><span class="badge">Available</span></div>
-      </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=800&q=80" alt="Signage"></div>
-        <div class="card-footer"><span class="card-title">Large Format Signage</span><span class="badge">Available</span></div>
+      <div class="gallery-grid">
+        <div class="work-card" onclick="openModal('Coffee Shop Brand System', 'BRAND IDENTITY', 'Minimalist typography and primary identity mark created for an artisanal coffee studio.', 'Illustrator Vector', 'Primary Logo', 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80" alt="Brand 1"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Cafe Brand Identity</div><div class="card-meta"><span>Logo System</span><span>Vector Mark</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Kids Boutique Wordmark', 'BRAND IDENTITY', 'Custom playful wordmark branding designed for a children clothing store.', 'Illustrator', 'Secondary Logo', 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=800&q=80" alt="Brand 2"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Children Boutique Mark</div><div class="card-meta"><span>Custom Wordmark</span><span>Playful Palette</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Artisanal Bakery Monogram', 'BRAND IDENTITY', 'Vintage-inspired monogram crest layout formatted for stamp and packaging application.', 'Illustrator', 'Badge Mark', 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80" alt="Brand 3"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Artisanal Bakery Badge</div><div class="card-meta"><span>Vintage Monogram</span><span>Packaging Stamp</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Tech Startup Identity', 'BRAND IDENTITY', 'Geometric vector logomark created with golden ratio proportions for cloud platform.', 'Illustrator Vector', 'Corporate Logo', 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80" alt="Brand 4"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Tech Startup Identity</div><div class="card-meta"><span>Geometric Vector</span><span>Scalable SVG</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Holistic Wellness Badge', 'BRAND IDENTITY', 'Organic line-art logo designed for natural wellness and spa business.', 'Illustrator', 'Wellness Mark', 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" alt="Brand 5"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Holistic Spa Emblem</div><div class="card-meta"><span>Line-Art Logo</span><span>Organic Style</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Brand Color Architecture', 'BRAND IDENTITY', 'Complete brand color palette specs with Pantone, CMYK, Hex, and RGB values.', 'Illustrator, Swatches', 'Color Guide', 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80" alt="Brand 6"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Brand Color Palette</div><div class="card-meta"><span>Pantone Matching</span><span>Multi-Medium</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Typography Pairing Guide', 'BRAND IDENTITY', 'Comprehensive font hierarchy rules specifying header, subhead, and body pairings.', 'InDesign', 'Typography Deck', 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="Brand 7"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Typography Hierarchy</div><div class="card-meta"><span>Font Pairing</span><span>Brand Specs</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Brand Mood Board', 'BRAND IDENTITY', 'Visual atmosphere collage defining photo aesthetic, material textures, and tone.', 'Photoshop', 'Visual Direction', 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80" alt="Brand 8"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Brand Mood Board</div><div class="card-meta"><span>Visual Direction</span><span>Art Curation</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Brand Guidelines Sheet', 'BRAND IDENTITY', 'Single-page brand manual summarizing logo clear space, usage, and graphic assets.', 'InDesign, PDF', 'Brand One-Pager', 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=800&q=80" alt="Brand 9"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Brand Guidelines Sheet</div><div class="card-meta"><span>Style Manual</span><span>Clear Space Rules</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Sub-Mark & Icon Suite', 'BRAND IDENTITY', 'Secondary brand icons created for mobile favicon and social avatar usage.', 'Illustrator Vector', 'Icon Kit', 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" alt="Brand 10"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Sub-Mark Icon Variations</div><div class="card-meta"><span>Social Avatars</span><span>Favicon Assets</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Matte Business Cards', 'BRAND IDENTITY', 'Standard 3.5x2 inch business card layout with custom typography alignment.', 'InDesign, Prepress', 'Stationery', 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80" alt="Brand 11"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Matte Business Card Set</div><div class="card-meta"><span>3.5x2 Print Spec</span><span>Bleed Margins</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Spot UV Luxury Business Card', 'BRAND IDENTITY', 'High-end card design incorporating raised foil varnish vector overlays.', 'Illustrator, Prepress', 'Luxury Stationery', 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=800&q=80" alt="Brand 12"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Spot-UV Foil Business Card</div><div class="card-meta"><span>Special Finish</span><span>Foil Overlay</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Executive Letterhead Layout', 'BRAND IDENTITY', 'Corporate letterhead layout formatted for print and digital PDF templates.', 'InDesign, Word Spec', 'Letterhead', 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80" alt="Brand 13"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Corporate Letterhead Suite</div><div class="card-meta"><span>A4/Letter Spec</span><span>Print Ready</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Small Business Thank You Card', 'BRAND IDENTITY', 'E-commerce package insert design featuring discount offer and brand message.', 'InDesign', 'Package Insert', 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&q=80" alt="Brand 14"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Customer Thank-You Card</div><div class="card-meta"><span>Shipping Collateral</span><span>Promo Offer</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Branded Invoice Template', 'BRAND IDENTITY', 'Clean digital invoice template aligned with brand identity specs.', 'InDesign, Illustrator', 'Digital Billing', 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1450133064473-71024230f91b?w=800&q=80" alt="Brand 15"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Branded Receipt Template</div><div class="card-meta"><span>Digital Document</span><span>Invoice Spec</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Instagram Launch Grid Kit', 'BRAND IDENTITY', '9-post cohesive social grid template designed for product launch campaigns.', 'Photoshop, Figma', '1080x1080 Kit', 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80" alt="Brand 16"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Instagram Brand Grid</div><div class="card-meta"><span>Social Kit</span><span>Launch Layout</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Instagram Story Campaign Kit', 'BRAND IDENTITY', 'Vertical story template collection for ongoing promotions and updates.', 'Figma', '1080x1920 Kit', 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80" alt="Brand 17"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Social Story Template Suite</div><div class="card-meta"><span>Mobile Stories</span><span>Modular Layout</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Facebook Header Banner Set', 'BRAND IDENTITY', 'Social header banners tailored for company pages and community groups.', 'Photoshop', '820x312 Banner', 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80" alt="Brand 18"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Facebook Banner Set</div><div class="card-meta"><span>Social Media</span><span>Header Asset</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('LinkedIn Company Cover', 'BRAND IDENTITY', 'Professional LinkedIn company profile header graphic aligned with corporate identity.', 'Photoshop', '1584x396 Banner', 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80" alt="Brand 19"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">LinkedIn Corporate Cover</div><div class="card-meta"><span>B2B Branding</span><span>Profile Graphic</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Digital Mobile Loyalty Pass', 'BRAND IDENTITY', 'Customer loyalty pass graphic created for digital wallet mobile apps.', 'Figma, Vector', 'Mobile Wallet Asset', 'https://images.unsplash.com/photo-1556742049-0a67d983416c?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1556742049-0a67d983416c?w=800&q=80" alt="Brand 20"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Mobile Loyalty Pass</div><div class="card-meta"><span>Digital Asset</span><span>Customer Retention</span></div></div>
+        </div>
       </div>
     </div>
 
-    <!-- SECTION 2 -->
-    <h2 class="section-title">02. Digital Marketing &amp; E-Commerce</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80" alt="Campaign"></div>
-        <div class="card-footer"><span class="card-title">Social Campaign Assets</span><span class="badge">Available</span></div>
+    <!-- CATEGORY 2: PRINT & MARKETING COLLATERAL -->
+    <div id="cat-print" class="category-group">
+      <div class="group-header">
+        <div>
+          <h2 class="group-title">Print Layout &amp; Marketing Collateral</h2>
+          <p class="group-desc">Flyers, brochures, large-format signs, packaging, menus, and prepress files.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="E-Commerce"></div>
-        <div class="card-footer"><span class="card-title">E-Commerce Hero Ads</span><span class="badge">Available</span></div>
-      </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=800&q=80" alt="Branding"></div>
-        <div class="card-footer"><span class="card-title">Brand Identity System</span><span class="badge">Available</span></div>
-      </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80" alt="Social Media"></div>
-        <div class="card-footer"><span class="card-title">Promotional Story Assets</span><span class="badge">Available</span></div>
+      <div class="gallery-grid">
+        <div class="work-card" onclick="openModal('Fitness Studio Promotional Flyer', 'PRINT COLLATERAL', 'High-impact promotional flyer layout engineered with 300 DPI CMYK press specs.', 'InDesign, Photoshop', 'A5 Promotional Flyer', 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" alt="Print 1"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Fitness Studio Flyer</div><div class="card-meta"><span>CMYK 300 DPI</span><span>Promo Layout</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Real Estate Tri-Fold Brochure', 'PRINT COLLATERAL', 'Corporate brochure featuring 3-panel fold logic and property listing layouts.', 'InDesign', 'Tri-Fold Letter', 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Print 2"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Real Estate Brochure</div><div class="card-meta"><span>Tri-Fold Layout</span><span>Property Showcase</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Services Bi-Fold Brochure', 'PRINT COLLATERAL', 'Clean bi-fold layout formatted for corporate client presentation decks.', 'InDesign', 'Half-Fold Letter', 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80" alt="Print 3"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Services Bi-Fold Guide</div><div class="card-meta"><span>Editorial Grid</span><span>Service Specs</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Direct Mail Postcard', 'PRINT COLLATERAL', 'USPS mail-spec marketing postcard featuring clear offer CTA layout.', 'InDesign, Prepress', '6x4 Mail Postcard', 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&q=80" alt="Print 4"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Direct Mail Postcard</div><div class="card-meta"><span>Postal Spec</span><span>Direct Promo</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Seasonal Discount Leaflet', 'PRINT COLLATERAL', 'Retail discount leaflet formatted for fast mass-printing output.', 'InDesign', 'A6 Promo Leaflet', 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&q=80" alt="Print 5"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Seasonal Promo Leaflet</div><div class="card-meta"><span>Mass Print</span><span>Retail Offer</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Exhibition Typographic Poster', 'PRINT COLLATERAL', 'Large-format gallery poster with Swiss grid baseline typography structure.', 'InDesign, Illustrator', '18x24 Poster', 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="Print 6"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Exhibition Poster</div><div class="card-meta"><span>Large Format</span><span>Swiss Grid</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Trade Show Large Banner', 'PRINT COLLATERAL', '10x20 foot vector trade show backdrop design formatted for vinyl print.', 'Illustrator Vector', 'Large Banner Spec', 'https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=800&q=80" alt="Print 7"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Trade Show Banner</div><div class="card-meta"><span>Vinyl Print</span><span>Vector Scale</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Storefront Vinyl Signage', 'PRINT COLLATERAL', 'Outdoor storefront sign graphic prepped with vector cut-contour paths.', 'Illustrator', 'Store Sign Spec', 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="Print 8"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Storefront Vinyl Graphics</div><div class="card-meta"><span>Cut-Contour</span><span>Outdoor Sign</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Roll-Up Banner System', 'PRINT COLLATERAL', 'Vertical pull-up event banner with clear top-to-bottom hierarchy.', 'InDesign, Illustrator', '85x200 cm Banner', 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80" alt="Print 9"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Roll-Up Event Banner</div><div class="card-meta"><span>Event Banner</span><span>Stand Display</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Concert Event Poster', 'PRINT COLLATERAL', 'Custom music festival poster incorporating display typography and textures.', 'Photoshop, Illustrator', 'A2 Poster', 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80" alt="Print 10"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Concert Festival Poster</div><div class="card-meta"><span>Display Art</span><span>Print Spec</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Packaging Box Dieline', 'PRINT COLLATERAL', 'Folding carton dieline template with cut lines, crease vectors, and safety bleeds.', 'Illustrator Dieline', 'Packaging Box', 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80" alt="Print 11"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Product Packaging Box</div><div class="card-meta"><span>Vector Cutline</span><span>3D Dieline</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Botanical Skincare Label', 'PRINT COLLATERAL', 'Waterproof product jar label design formatted with wrap-around safety margins.', 'Illustrator', 'Jar Label', 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80" alt="Print 12"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Skincare Product Label</div><div class="card-meta"><span>Wrap Label</span><span>Foil Accent</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Die-Cut Branded Stickers', 'PRINT COLLATERAL', 'Custom promotional sticker collection prepared with vector cut contour lines.', 'Illustrator Vector', 'Sticker Sheet', 'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=800&q=80" alt="Print 13"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Die-Cut Sticker Sheet</div><div class="card-meta"><span>Cut Contour</span><span>Vinyl Merch</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Tote Bag Screenprint Layout', 'PRINT COLLATERAL', 'Spot-color vector graphics configured for textile screen printing.', 'Illustrator Spot-Color', 'Merchandise', 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&q=80" alt="Print 14"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Branded Tote Bag Artwork</div><div class="card-meta"><span>Screen Print</span><span>Spot Color</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Apparel Apparel Print Guide', 'PRINT COLLATERAL', 'Tech pack showing chest logo scaling and back print placement coordinates.', 'Illustrator Tech Pack', 'Apparel Spec', 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&q=80" alt="Print 15"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Apparel Print Placement</div><div class="card-meta"><span>Tech Pack</span><span>Print Placement</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Dine-In Menu Spread', 'PRINT COLLATERAL', 'Multi-page restaurant dine-in menu featuring organized category grids.', 'InDesign', 'A4 Menu Spread', 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="Print 16"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Restaurant Dine-In Menu</div><div class="card-meta"><span>Menu Spread</span><span>Editorial Grid</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Takeout Menu Brochure', 'PRINT COLLATERAL', 'Compact takeout menu brochure formatted for easy folding and mailing.', 'InDesign', 'Tri-Fold Takeout', 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80" alt="Print 17"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Takeout Menu Leaflet</div><div class="card-meta"><span>Compact Fold</span><span>Print Ready</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Multi-Page Product Catalog', 'PRINT COLLATERAL', 'Editorial retail catalog layout incorporating master pages and auto-page numbers.', 'InDesign', 'Multi-Page Catalog', 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80" alt="Print 18"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Product Catalog Spread</div><div class="card-meta"><span>InDesign Master</span><span>Retail Grid</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Event Program Booklet', 'PRINT COLLATERAL', 'Event schedule booklet prepped with saddle-stitch binding margins.', 'InDesign Prepress', 'Saddle-Stitch Booklet', 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&q=80" alt="Print 19"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Event Program Leaflet</div><div class="card-meta"><span>Saddle Stitch</span><span>Booklet Layout</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Table Tent Display Menu', 'PRINT COLLATERAL', 'Self-standing acrylic insert table-tent menu template for hospitality tables.', 'InDesign', '4x6 Table Tent', 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80" alt="Print 20"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Table-Tent Menu Card</div><div class="card-meta"><span>Stand Display</span><span>Hospitality</span></div></div>
+        </div>
       </div>
     </div>
 
-    <!-- SECTION 3 -->
-    <h2 class="section-title">03. Visual Arts &amp; Compositing</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&q=80" alt="Compositing"></div>
-        <div class="card-footer"><span class="card-title">Surreal Photo Edit</span><span class="badge">Available</span></div>
+    <!-- CATEGORY 3: CUSTOM LAYOUTS & GRAPHIC TRANSFORMATIONS -->
+    <div id="cat-custom" class="category-group">
+      <div class="group-header">
+        <div>
+          <h2 class="group-title">Custom Layouts &amp; Graphic Transformations</h2>
+          <p class="group-desc">Before &amp; after redesigns, vector conversions, infographics, pitch decks, and photo editing.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Vector Art"></div>
-        <div class="card-footer"><span class="card-title">Vector Geometry</span><span class="badge">Available</span></div>
+      <div class="gallery-grid">
+        <div class="work-card" onclick="openModal('Sketch-to-Vector Redesign', 'CUSTOM LAYOUTS', 'Hand sketch converted into clean, production-ready vector logo lines.', 'Illustrator Vector', 'Vector Conversion', 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80" alt="Custom 1"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Sketch-to-Vector Logo</div><div class="card-meta"><span>Vector Tracing</span><span>Precision Paths</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Low-Res Raster Cleanup', 'CUSTOM LAYOUTS', 'Low-resolution PNG redrawn into scalable high-DPI EPS vector file.', 'Illustrator', 'Raster Rebuild', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Custom 2"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Raster Artwork Vectorization</div><div class="card-meta"><span>High-DPI Vector</span><span>Asset Restoration</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Template Flyer Upgrade', 'CUSTOM LAYOUTS', 'Generic layout template redesigned with custom brand hierarchy and graphics.', 'InDesign, Photoshop', 'Layout Overhaul', 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80" alt="Custom 3"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Template Design Redesign</div><div class="card-meta"><span>Layout Polish</span><span>Visual Upgrade</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Client Brief Layout Transformation', 'CUSTOM LAYOUTS', 'Unstructured text document transformed into clear promotional flyer layout.', 'InDesign', 'Visual Hierarchy', 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80" alt="Custom 4"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Cluttered Brief Redesign</div><div class="card-meta"><span>Structural Polish</span><span>Hierarchy Fix</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Legacy Brand Refresh', 'CUSTOM LAYOUTS', 'Outdated corporate logo modernized while retaining core visual heritage.', 'Illustrator', 'Logo Modernization', 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" alt="Custom 5"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Legacy Logo Modernization</div><div class="card-meta"><span>Brand Refresh</span><span>Vector Update</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Hero Banner Vector Art', 'CUSTOM LAYOUTS', 'Custom flat illustration developed for SaaS website hero banner.', 'Illustrator Vector', 'Web Artwork', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Custom 6"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Vector Hero Illustration</div><div class="card-meta"><span>Flat Illustration</span><span>Hero Graphic</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Business Service Line-Icons', 'CUSTOM LAYOUTS', 'Cohesive set of custom stroke-based vector icons for services page.', 'Illustrator Vector', 'Iconography', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Custom 7"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Line Icon Suite</div><div class="card-meta"><span>Vector Stroke</span><span>Icon System</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Data Visualization Infographic', 'CUSTOM LAYOUTS', 'Complex survey data compiled into clean, scannable infographic layout.', 'Illustrator, InDesign', 'Infographic Spec', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Custom 8"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Custom Data Infographic</div><div class="card-meta"><span>Data Viz</span><span>Vector Chart</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Custom Event Vector Map', 'CUSTOM LAYOUTS', 'Illustrated venue navigation map created for conference booklet.', 'Illustrator Vector', 'Illustrated Map', 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80" alt="Custom 9"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Custom Vector Map</div><div class="card-meta"><span>Vector Art</span><span>Venue Diagram</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Isometric Logistics Graphic', 'CUSTOM LAYOUTS', '3D isometric vector illustration showcasing supply chain workflow.', 'Illustrator Isometric', '3D Vector', 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" alt="Custom 10"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Isometric Logistics Vector</div><div class="card-meta"><span>3D Isometric</span><span>Workflow Art</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Pitch Deck Title Slide', 'CUSTOM LAYOUTS', 'Executive presentation cover slide layout designed for investor meetings.', 'InDesign, PowerPoint', 'Slide Layout', 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80" alt="Custom 11"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Pitch Deck Title Slide</div><div class="card-meta"><span>16:9 Presentation</span><span>Cover Design</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Key Metrics Presentation Slide', 'CUSTOM LAYOUTS', 'Clean data display slide formatting quarterly performance metrics.', 'Figma, PowerPoint', 'Metrics Deck', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Custom 12"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Metrics Slide Layout</div><div class="card-meta"><span>Data Deck</span><span>Chart Layout</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Corporate Service Deck Slide', 'CUSTOM LAYOUTS', 'Modular 3-column service offering slide for business proposals.', 'InDesign', 'Service Slide', 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80" alt="Custom 13"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Service Offering Deck</div><div class="card-meta"><span>Pitch Layout</span><span>3-Column Grid</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Company Timeline Slide', 'CUSTOM LAYOUTS', 'Visual history timeline layout designed for company profile presentations.', 'Illustrator, PPT', 'Timeline Slide', 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80" alt="Custom 14"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Timeline History Slide</div><div class="card-meta"><span>Infographic Slide</span><span>Company Milestones</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Pitch Deck Closing CTA Slide', 'CUSTOM LAYOUTS', 'High-impact contact slide design prompting partner follow-up.', 'InDesign', 'Contact Slide', 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80" alt="Custom 15"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Pitch Deck CTA Slide</div><div class="card-meta"><span>Closing Slide</span><span>Call To Action</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Product Background Removal', 'CUSTOM LAYOUTS', 'Precision cutout mask extracting detailed product photography.', 'Photoshop Masking', 'Photo Edit', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80" alt="Custom 16"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Precision Object Extraction</div><div class="card-meta"><span>Alpha Masking</span><span>Clean Isolated PNG</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('E-Commerce Photo Color Grade', 'CUSTOM LAYOUTS', 'Professional lighting and white balance correction for product photos.', 'Lightroom, Photoshop', 'Photo Touchup', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80" alt="Custom 17"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Product Color Retouching</div><div class="card-meta"><span>Color Correction</span><span>E-Commerce Spec</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Multi-Photo Composite Poster', 'CUSTOM LAYOUTS', 'Creative multi-layer photo composite poster incorporating blending modes.', 'Photoshop Layers', 'Digital Composite', 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&q=80" alt="Custom 18"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Photo Composite Artwork</div><div class="card-meta"><span>Multi-Layer Blend</span><span>Creative Composite</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Realistic Product Shadows', 'CUSTOM LAYOUTS', 'Realistic contact shadow generation added to e-commerce product cutout.', 'Photoshop', 'Shadow FX', 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&q=80" alt="Custom 19"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Realistic Drop Shadow FX</div><div class="card-meta"><span>Photoshop FX</span><span>Product Render</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Corporate Portrait Retouching', 'CUSTOM LAYOUTS', 'Frequency separation portrait skin cleanup for executive team bios.', 'Photoshop Retouch', 'Portrait Edit', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80" alt="Custom 20"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Executive Portrait Touchup</div><div class="card-meta"><span>Frequency Separation</span><span>Headshot Retouch</span></div></div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80" alt="Album Cover"></div>
-        <div class="card-footer"><span class="card-title">Album Artwork</span><span class="badge">Available</span></div>
+    </div>
+
+    <!-- CATEGORY 4: DIGITAL DESIGN & AI WORKFLOWS -->
+    <div id="cat-digital" class="category-group">
+      <div class="group-header">
+        <div>
+          <h2 class="group-title">Digital Design &amp; AI Workflows</h2>
+          <p class="group-desc">E-commerce web banners, email templates, AI-assisted concept renders, and animated social assets.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&q=80" alt="3D Render"></div>
-        <div class="card-footer"><span class="card-title">3D Abstract Render</span><span class="badge">Available</span></div>
+      <div class="gallery-grid">
+        <div class="work-card" onclick="openModal('Google Display Banner Suite', 'DIGITAL DESIGN', 'Multi-size web banner set (300x250, 728x90, 160x600) for ad campaigns.', 'Photoshop, Web', 'Display Ad Suite', 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80" alt="Digital 1"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">E-Commerce Display Ad Suite</div><div class="card-meta"><span>Multi-Size Banner</span><span>Web Marketing</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('E-Commerce Web Hero', 'DIGITAL DESIGN', 'High-conversion website hero banner graphic optimized for desktop view.', 'Photoshop, Figma', '1920x800 Banner', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Digital 2"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">E-Commerce Web Hero</div><div class="card-meta"><span>Web Header</span><span>High Conversion</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Paid Social Graphic Set', 'DIGITAL DESIGN', 'High-contrast promotional ad graphic tailored for conversion campaigns.', 'Photoshop', '1080x1080 Banner', 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80" alt="Digital 3"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Paid Social Promo Graphic</div><div class="card-meta"><span>Social Ads</span><span>Product Placement</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Animated GIF Web Banner', 'DIGITAL DESIGN', 'Short dynamic animated GIF banner boosting CTR on seasonal sales.', 'Photoshop Timeline', 'Animated GIF', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Digital 4"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Animated GIF Display Banner</div><div class="card-meta"><span>Motion GIF</span><span>Web Promotion</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Mobile App Promo Banner', 'DIGITAL DESIGN', 'App feature graphics created for mobile landing pages.', 'Figma', 'Mobile Web Banner', 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80" alt="Digital 5"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Mobile App Promo Graphic</div><div class="card-meta"><span>Mobile First</span><span>App Promo</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Newsletter Email Hero Header', 'DIGITAL DESIGN', 'HTML-compatible email banner header designed for high open rates.', 'Figma, Photoshop', '600px Email Width', 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80" alt="Digital 6"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Email Campaign Hero Banner</div><div class="card-meta"><span>Email Layout</span><span>Marketing Graphic</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('E-Commerce Email Grid Header', 'DIGITAL DESIGN', 'Product showcase email section graphic layout for news broadcasts.', 'Figma', '600px Email Width', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Digital 7"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">E-Commerce Newsletter Asset</div><div class="card-meta"><span>Product Grid</span><span>Email Marketing</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Event Invitation Email Banner', 'DIGITAL DESIGN', 'Promotional event header graphic formatted for webinar invitations.', 'Figma', '600px Email Banner', 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80" alt="Digital 8"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Event Invitation Email Graphic</div><div class="card-meta"><span>Event Header</span><span>Digital Invitation</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Blog Article Header Graphic', 'DIGITAL DESIGN', 'Featured blog header layout incorporating custom typography.', 'Photoshop', '1200x630 Graphic', 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80" alt="Digital 9"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Editorial Blog Header</div><div class="card-meta"><span>Content Graphic</span><span>Web Publishing</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Digital E-Book Cover', 'DIGITAL DESIGN', '3D digital e-book cover graphic designed for lead magnet downloads.', 'Photoshop 3D', '3D E-Book Cover', 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80" alt="Digital 10"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Digital E-Book Cover Design</div><div class="card-meta"><span>Lead Magnet</span><span>3D Mockup</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('AI Visual + Vector Typo', 'DIGITAL DESIGN', 'AI generative background combined with custom vector typography in Illustrator.', 'Midjourney, Illustrator', 'Hybrid Artwork', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Digital 11"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">AI Scene + Vector Typography</div><div class="card-meta"><span>AI Prompting</span><span>Vector Integration</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('AI Scene Product Mockup', 'DIGITAL DESIGN', 'AI product environment generation post-processed in Photoshop.', 'Gemini, Photoshop', 'AI Composition', 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80" alt="Digital 12"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">AI Background Product Scene</div><div class="card-meta"><span>Generative AI</span><span>Photoshop Blend</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('AI Concept-to-Vector Work', 'DIGITAL DESIGN', 'Quick AI prompt exploration converted into polished client vector artwork.', 'Midjourney, Illustrator', 'Concept-to-Vector', 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" alt="Digital 13"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">AI Ideation Vector Render</div><div class="card-meta"><span>Rapid Concept</span><span>Clean Vector</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('AI Generative Fill Expansion', 'DIGITAL DESIGN', 'Narrow photo expanded into wide banner format using Generative Fill.', 'Photoshop AI', 'Image Expansion', 'https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=800&q=80" alt="Digital 14"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Generative AI Canvas Expansion</div><div class="card-meta"><span>Photoshop AI</span><span>Wide Format</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('AI Mood Board Concept Deck', 'DIGITAL DESIGN', 'AI generated concept explorations used during client consultations.', 'Midjourney, Figma', 'Concept Deck', 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80" alt="Digital 15"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">AI Visual Consultation Mood Board</div><div class="card-meta"><span>Client Pitch</span><span>AI Inspiration</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Social Motion Graphic Frame', 'DIGITAL DESIGN', 'Frame-by-frame animated layout sequence designed for social video ads.', 'After Effects, Photoshop', 'Motion Design', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Digital 16"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Social Motion Graphic Frame</div><div class="card-meta"><span>Motion Asset</span><span>Social Video</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Animated Logo Intro Frames', 'DIGITAL DESIGN', 'Vector logo animation storyboard breakdown.', 'After Effects', 'Logo Animation', 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" alt="Digital 17"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Vector Logo Animation Storyboard</div><div class="card-meta"><span>Motion Logo</span><span>Vector Storyboard</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Animated Promo Story Layout', 'DIGITAL DESIGN', 'Dynamic animated vertical story graphic template for products.', 'After Effects, Figma', '9:16 Video Story', 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80" alt="Digital 18"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Animated Promo Story Layout</div><div class="card-meta"><span>Vertical Motion</span><span>Product Ad</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Micro-Interaction Button Animation', 'DIGITAL DESIGN', 'Interactive UI web button call-to-action animation states.', 'Figma, CSS Motion', 'UI Motion', 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80" alt="Digital 19"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">UI Micro-Interaction Motion</div><div class="card-meta"><span>UI/UX Motion</span><span>Interactive CTA</span></div></div>
+        </div>
+        <div class="work-card" onclick="openModal('Animated CTA Web Banner', 'DIGITAL DESIGN', 'Dynamic digital ad banner incorporating subtle moving vector elements.', 'After Effects, GIF', 'Animated Ad', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80')">
+          <div class="img-box"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Digital 20"><div class="overlay"><span class="zoom-hint">🔍 View Design Specs</span></div></div>
+          <div class="card-info"><div class="card-title">Animated CTA Web Banner</div><div class="card-meta"><span>Motion Ad</span><span>Web Conversion</span></div></div>
+        </div>
       </div>
     </div>
 
   </main>
 
+  <!-- LIGHTBOX / MODAL WINDOW -->
+  <div id="portfolio-modal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+      <div class="modal-img-container">
+        <img id="modal-img" src="" alt="Project Image">
+      </div>
+      <div class="modal-details">
+        <div>
+          <span id="modal-category" class="modal-category">CATEGORY</span>
+          <h3 id="modal-title">Project Title</h3>
+          <p id="modal-desc" class="modal-description">Project description goes here...</p>
+        </div>
+        <div class="modal-specs">
+          <div class="spec-item">
+            <span class="spec-label">Tools Used:</span>
+            <span id="modal-tools" class="spec-val">Adobe Creative Suite</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Deliverable Format:</span>
+            <span id="modal-format" class="spec-val">Print / Digital</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Abderrahmen — Graphic Design Portfolio for Vista Application</p>
+  </footer>
+
+  <script>
+    // Tab Category Switcher Logic
+    function switchCategory(catId, btn) {
+      const groups = document.querySelectorAll('.category-group');
+      groups.forEach(group => group.classList.remove('active'));
+      
+      const target = document.getElementById('cat-' + catId);
+      if (target) {
+        target.classList.add('active');
+      }
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // Modal / Lightbox Logic
+    function openModal(title, category, description, tools, format, imgSrc) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-category').innerText = category;
+      document.getElementById('modal-desc').innerText = description;
+      document.getElementById('modal-tools').innerText = tools;
+      document.getElementById('modal-format').innerText = format;
+      document.getElementById('modal-img').src = imgSrc;
+      
+      const modal = document.getElementById('portfolio-modal');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('portfolio-modal');
+      modal.classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on background overlay click
+    window.onclick = function(event) {
+      const modal = document.getElementById('portfolio-modal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
 </body>
 </html>
