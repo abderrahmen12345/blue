@@ -3,214 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graphic Designer | Portfolio</title>
+  <title>Graphic Design Portfolio | Abderrahmen</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #0d110e;
-      color: #ffffff;
-      padding: 0;
-      margin: 0;
-    }
-    .top-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 60px;
-      background-color: #0d110e;
-      border-bottom: 1px solid #1a221d;
-    }
-    .brand-title {
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #e0e0e0;
-      letter-spacing: -0.2px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      font-size: 0.95rem;
-    }
-    .nav-links a {
-      color: #a0a0a0;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a.active,
-    .nav-links a:hover {
-      color: #20e070;
-      font-weight: 600;
-      border-bottom: 2px solid #20e070;
-      padding-bottom: 4px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 40px;
-    }
-
-    .page-title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      letter-spacing: -1.5px;
-      margin-bottom: 50px;
-      color: #ffffff;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .folder-card {
-      background-color: #141b16;
-      border: 1px solid #1f2a23;
-      border-radius: 8px;
-      overflow: hidden;
-      text-decoration: none;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .folder-card:hover {
-      transform: translateY(-4px);
-      border-color: #20e070;
-    }
-
-    .card-img-wrap {
-      width: 100%;
-      height: 260px;
-      overflow: hidden;
-      background-color: #0a0d0b;
-    }
-    .card-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-footer {
-      padding: 20px 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .card-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #ffffff;
-    }
-    .badge {
-      background-color: #20e070;
-      color: #0d110e;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 5px 14px;
-      border-radius: 20px;
-      text-transform: capitalize;
-    }
-
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .top-nav { padding: 20px 24px; }
-      .container { padding: 40px 24px; }
-      .page-title { font-size: 2.5rem; }
-    }
-    @media (max-width: 600px) {
-      .grid { grid-template-columns: 1fr; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d110e; color: #ffffff; }
+    .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 60px; border-bottom: 1px solid #1a221d; }
+    .brand-title { font-size: 1.15rem; color: #e0e0e0; font-weight: 500; }
+    .nav-links a { color: #a0a0a0; text-decoration: none; margin-left: 24px; }
+    .nav-links a.active { color: #20e070; font-weight: 600; border-bottom: 2px solid #20e070; padding-bottom: 4px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .section-title { font-size: 1.75rem; color: #20e070; margin: 40px 0 20px 0; border-bottom: 1px solid #1f2a23; padding-bottom: 10px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .card { background-color: #141b16; border: 1px solid #1f2a23; border-radius: 8px; overflow: hidden; text-decoration: none; transition: 0.2s; }
+    .card:hover { transform: translateY(-4px); border-color: #20e070; }
+    .card-img-wrap { width: 100%; height: 240px; overflow: hidden; background-color: #0a0d0b; }
+    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-footer { padding: 18px; display: flex; justify-content: space-between; align-items: center; }
+    .card-title { font-size: 1rem; color: #ffffff; font-weight: 600; }
+    .badge { background-color: #20e070; color: #0d110e; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
   <header class="top-nav">
-    <div class="brand-title">Your Name > Graphic Designer Portfolio</div>
+    <div class="brand-title">Abderrahmen > Portfolio</div>
     <nav class="nav-links">
-      <a href="#">Work</a>
-      <a href="#" class="active">Available</a>
+      <a href="#" class="active">Available Work</a>
       <a href="#">About</a>
     </nav>
   </header>
 
-  <!-- Main Content Grid -->
   <main class="container">
-    <h1 class="page-title">Available work</h1>
+    <h1 style="font-size: 2.8rem; margin-bottom: 10px;">Portfolio Work</h1>
 
+    <!-- SECTION 1 -->
+    <h2 class="section-title">01. Print Layout & Prepress</h2>
     <div class="grid">
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%2320e070' stroke-width='4'/><text x='80' y='160' fill='%2320e070' font-family='sans-serif' font-size='28' font-weight='bold'>01. PRINT LAYOUT</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Swiss Grid &amp; Prepress Spec</text></svg>"></div><div class="card-footer"><span class="card-title">Editorial Magazine &amp; Grid</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%2300bfff' stroke-width='4'/><text x='80' y='160' fill='%2300bfff' font-family='sans-serif' font-size='28' font-weight='bold'>02. PACKAGING</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Box Mockup &amp; Dielines</text></svg>"></div><div class="card-footer"><span class="card-title">Packaging &amp; Dielines</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%23ff007f' stroke-width='4'/><text x='80' y='160' fill='%23ff007f' font-family='sans-serif' font-size='28' font-weight='bold'>03. BROCHURE</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Tri-Fold Marketing Layout</text></svg>"></div><div class="card-footer"><span class="card-title">Tri-Fold Print Brochure</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%23a020f0' stroke-width='4'/><text x='80' y='160' fill='%23a020f0' font-family='sans-serif' font-size='28' font-weight='bold'>04. EXHIBITION</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Large Format Backdrop</text></svg>"></div><div class="card-footer"><span class="card-title">Large Format Signage</span><span class="badge">Available</span></div></div>
+    </div>
 
-      <!-- Folder 1 -->
-      <a href="#" class="folder-card">
-        <div class="card-img-wrap">
-          <img src="img1.jpg" alt="Brand Identity & CMYK">
-        </div>
-        <div class="card-footer">
-          <span class="card-title">Brand Identity & CMYK</span>
-          <span class="badge">Available</span>
-        </div>
-      </a>
+    <!-- SECTION 2 -->
+    <h2 class="section-title">02. Digital Marketing &amp; E-Commerce</h2>
+    <div class="grid">
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%23ff8c00' stroke-width='4'/><text x='80' y='160' fill='%23ff8c00' font-family='sans-serif' font-size='28' font-weight='bold'>05. CAMPAIGN</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Multi-Channel Ad Assets</text></svg>"></div><div class="card-footer"><span class="card-title">Social Campaign Assets</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%2320e070' stroke-width='4'/><text x='80' y='160' fill='%2320e070' font-family='sans-serif' font-size='28' font-weight='bold'>06. E-COMMERCE</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Web Hero &amp; Product Ads</text></svg>"></div><div class="card-footer"><span class="card-title">E-Commerce Hero Ads</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%2300bfff' stroke-width='4'/><text x='80' y='160' fill='%2300bfff' font-family='sans-serif' font-size='28' font-weight='bold'>07. BRANDING</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Identity &amp; Stationery System</text></svg>"></div><div class="card-footer"><span class="card-title">Brand Identity System</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%23ff007f' stroke-width='4'/><text x='80' y='160' fill='%23ff007f' font-family='sans-serif' font-size='28' font-weight='bold'>08. SOCIAL MEDIA</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Promotional Story Set</text></svg>"></div><div class="card-footer"><span class="card-title">Promotional Story Assets</span><span class="badge">Available</span></div></div>
+    </div>
 
-      <!-- Folder 2 -->
-      <a href="#" class="folder-card">
-        <div class="card-img-wrap">
-          <img src="img2.jpg" alt="Print Media & Prepress">
-        </div>
-        <div class="card-footer">
-          <span class="card-title">Print Media & Prepress</span>
-          <span class="badge">Available</span>
-        </div>
-      </a>
-
-      <!-- Folder 3 -->
-      <a href="#" class="folder-card">
-        <div class="card-img-wrap">
-          <img src="img3.jpg" alt="Digital Marketing">
-        </div>
-        <div class="card-footer">
-          <span class="card-title">Digital Marketing</span>
-          <span class="badge">Available</span>
-        </div>
-      </a>
-
-      <!-- Folder 4 -->
-      <a href="#" class="folder-card">
-        <div class="card-img-wrap">
-          <img src="img4.jpg" alt="Packaging & Dielines">
-        </div>
-        <div class="card-footer">
-          <span class="card-title">Packaging & Dielines</span>
-          <span class="badge">Available</span>
-        </div>
-      </a>
-
-      <!-- Folder 5 -->
-      <a href="#" class="folder-card">
-        <div class="card-img-wrap">
-          <img src="img5.jpg" alt="Large Format & Signage">
-        </div>
-        <div class="card-footer">
-          <span class="card-title">Large Format & Signage</span>
-          <span class="badge">Available</span>
-        </div>
-      </a>
-
-      <!-- Folder 6 -->
-      <a href="#" class="folder-card">
-        <div class="card-img-wrap">
-          <img src="img6.jpg" alt="Social Media Assets">
-        </div>
-        <div class="card-footer">
-          <span class="card-title">Social Media Assets</span>
-          <span class="badge">Available</span>
-        </div>
-      </a>
-
+    <!-- SECTION 3 -->
+    <h2 class="section-title">03. Visual Arts &amp; Compositing</h2>
+    <div class="grid">
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%23a020f0' stroke-width='4'/><text x='80' y='160' fill='%23a020f0' font-family='sans-serif' font-size='28' font-weight='bold'>09. COMPOSITING</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Surreal Photo Manipulation</text></svg>"></div><div class="card-footer"><span class="card-title">Surreal Photo Edit</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%23ff8c00' stroke-width='4'/><text x='80' y='160' fill='%23ff8c00' font-family='sans-serif' font-size='28' font-weight='bold'>10. VECTOR</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Geometric Pattern System</text></svg>"></div><div class="card-footer"><span class="card-title">Vector Geometry</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%2320e070' stroke-width='4'/><text x='80' y='160' fill='%2320e070' font-family='sans-serif' font-size='28' font-weight='bold'>11. EDITORIAL ART</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Creative Album &amp; Media Cover</text></svg>"></div><div class="card-footer"><span class="card-title">Album Artwork</span><span class="badge">Available</span></div></div>
+      
+      <div class="card"><div class="card-img-wrap"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%230d110e'/><rect x='40' y='40' width='720' height='420' fill='none' stroke='%2300bfff' stroke-width='4'/><text x='80' y='160' fill='%2300bfff' font-family='sans-serif' font-size='28' font-weight='bold'>12. 3D RENDER</text><text x='80' y='260' fill='%23ffffff' font-family='sans-serif' font-size='36' font-weight='bold'>Spatial Studio Render</text></svg>"></div><div class="card-footer"><span class="card-title">3D Abstract Render</span><span class="badge">Available</span></div></div>
     </div>
   </main>
 
